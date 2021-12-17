@@ -119,6 +119,8 @@ public class LizzieFrame extends MainFrame {
   public boolean isDrawVisitsInTitle = true;
   RightClickMenu rightClickMenu;
 
+  private int guessModeFailedCounter = 0;
+
   /** Creates a window */
   public LizzieFrame() {
     super();
@@ -1167,9 +1169,15 @@ public class LizzieFrame extends MainFrame {
           if (next.get().lastMove.isPresent()) {
             int[] nextCoords = next.get().lastMove.get();
             if (coords[0] == nextCoords[0] && coords[1] == nextCoords[1]) {
+              guessModeFailedCounter = 0;
               Lizzie.board.nextMove();
             } else {
               java.awt.Toolkit.getDefaultToolkit().beep();
+              guessModeFailedCounter++;
+              if (guessModeFailedCounter == 3) {
+                guessModeFailedCounter = 0;
+                Lizzie.board.nextMove();
+              }
             }
           }
         }
