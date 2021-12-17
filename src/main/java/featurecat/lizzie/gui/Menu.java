@@ -510,6 +510,21 @@ public class Menu extends JMenuBar {
           @Override
           public void actionPerformed(ActionEvent e) {
             Lizzie.config.guessMove = !Lizzie.config.guessMove;
+            if (Lizzie.config.guessMove) {
+              int attempts = -1;
+              while (attempts < 0) {
+                String s = (String)JOptionPane.showInputDialog(
+                      Lizzie.frame,
+                      "How many guess attempts",
+                      "Guess mode",
+                      JOptionPane.PLAIN_MESSAGE,
+                      null,
+                      null,
+                      "3");
+                attempts = Integer.parseInt(s);
+              }
+              Lizzie.config.guessMoveAttempts = attempts;
+            }
           }
         });
     viewMenu.add(guessMove);

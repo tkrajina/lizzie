@@ -1172,9 +1172,10 @@ public class LizzieFrame extends MainFrame {
               guessModeFailedCounter = 0;
               Lizzie.board.nextMove();
             } else {
-              java.awt.Toolkit.getDefaultToolkit().beep();
+              Toolkit.getDefaultToolkit().beep();
               guessModeFailedCounter++;
-              if (guessModeFailedCounter == 3) {
+              System.out.println(guessModeFailedCounter +"<->"+ Lizzie.config.guessMoveAttempts);
+              if (guessModeFailedCounter >= Lizzie.config.guessMoveAttempts) {
                 guessModeFailedCounter = 0;
                 Lizzie.board.nextMove();
               }
