@@ -73,6 +73,7 @@ public class Config {
   public boolean showToolBar = true;
   public String toolbarPosition = "South";
   public boolean showNameInBoard = true;
+  public boolean guessMove = false;
 
   public JSONObject config;
   public JSONObject leelazConfig;

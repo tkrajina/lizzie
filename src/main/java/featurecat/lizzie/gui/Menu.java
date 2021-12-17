@@ -503,6 +503,17 @@ public class Menu extends JMenuBar {
         });
     viewMenu.add(showName);
 
+    final JCheckBoxMenuItem guessMove =
+        new JCheckBoxMenuItem(resourceBundle.getString("Menu.view.guessMove"));
+    guessMove.addActionListener(
+        new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent e) {
+            Lizzie.config.guessMove = !Lizzie.config.guessMove;
+          }
+        });
+    viewMenu.add(guessMove);
+
     viewMenu.addSeparator();
 
     final JMenuItem defaultView = new JMenuItem(resourceBundle.getString("Menu.view.defaultView"));

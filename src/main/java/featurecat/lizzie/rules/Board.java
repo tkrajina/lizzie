@@ -513,6 +513,10 @@ public class Board implements LeelazListener {
         return;
       }
 
+      if (Lizzie.config.guessMove) {
+        return;
+      }
+
       // load a copy of the data at the current node of history
       Stone[] stones = history.getStones().clone();
       Zobrist zobrist = history.getZobrist();

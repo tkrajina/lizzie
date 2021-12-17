@@ -1161,6 +1161,21 @@ public class LizzieFrame extends MainFrame {
 
     if (boardCoordinates.isPresent()) {
       int[] coords = boardCoordinates.get();
+      if (Lizzie.config.guessMove) {
+        Optional<BoardData> next = Lizzie.board.getHistory().getNext();
+        if (next.isPresent()) {
+          if (next.get().lastMove.isPresent()) {
+            int[] nextCoords = next.get().lastMove.get();
+            if (coords[0] == nextCoords[0] && coords[1] == nextCoords[1]) {
+              Lizzie.board.nextMove();
+            } else {
+              java.awt.Toolkit.getDefaultToolkit().beep();
+            }
+          }
+        }
+        return;
+      }
+
       if (Lizzie.board.inAnalysisMode()) Lizzie.board.toggleAnalysis();
       if (!isPlayingAgainstLeelaz || (playerIsBlack == Lizzie.board.getData().blackToPlay))
         Lizzie.board.place(coords[0], coords[1]);
@@ -1168,6 +1183,7 @@ public class LizzieFrame extends MainFrame {
     if (Lizzie.config.showWinrate && moveNumber >= 0) {
       isPlayingAgainstLeelaz = false;
       Lizzie.board.goToMoveNumberBeyondBranch(moveNumber);
+
     }
     if (Lizzie.config.showVariationGraph) {
       variationTree.onClicked(x, y);
