@@ -74,6 +74,7 @@ public class LizzieFrame extends MainFrame {
     resourceBundle.getString("LizzieFrame.commands.keyW"),
     resourceBundle.getString("LizzieFrame.commands.keyCtrlW"),
     resourceBundle.getString("LizzieFrame.commands.keyG"),
+    resourceBundle.getString("LizzieFrame.commands.keyU"),
     resourceBundle.getString("LizzieFrame.commands.keyR"),
     resourceBundle.getString("LizzieFrame.commands.keyBracket"),
     resourceBundle.getString("LizzieFrame.commands.keyT"),
@@ -1174,7 +1175,7 @@ public class LizzieFrame extends MainFrame {
             } else {
               Toolkit.getDefaultToolkit().beep();
               guessModeFailedCounter++;
-              System.out.println(guessModeFailedCounter +"<->"+ Lizzie.config.guessMoveAttempts);
+              System.out.println(guessModeFailedCounter + "<->" + Lizzie.config.guessMoveAttempts);
               if (guessModeFailedCounter >= Lizzie.config.guessMoveAttempts) {
                 guessModeFailedCounter = 0;
                 Lizzie.board.nextMove();
@@ -1192,7 +1193,6 @@ public class LizzieFrame extends MainFrame {
     if (Lizzie.config.showWinrate && moveNumber >= 0) {
       isPlayingAgainstLeelaz = false;
       Lizzie.board.goToMoveNumberBeyondBranch(moveNumber);
-
     }
     if (Lizzie.config.showVariationGraph) {
       variationTree.onClicked(x, y);

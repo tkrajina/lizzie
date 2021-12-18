@@ -67,6 +67,7 @@ public class BoardPane extends LizziePane {
     resourceBundle.getString("LizzieFrame.commands.keyW"),
     resourceBundle.getString("LizzieFrame.commands.keyCtrlW"),
     resourceBundle.getString("LizzieFrame.commands.keyG"),
+    resourceBundle.getString("LizzieFrame.commands.keyU"),
     resourceBundle.getString("LizzieFrame.commands.keyR"),
     resourceBundle.getString("LizzieFrame.commands.keyBracket"),
     resourceBundle.getString("LizzieFrame.commands.keyT"),

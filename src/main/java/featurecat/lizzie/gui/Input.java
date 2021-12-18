@@ -377,6 +377,11 @@ public class Input implements MouseListener, KeyListener, MouseWheelListener, Mo
         refreshType = 2;
         break;
 
+      case VK_U:
+        Lizzie.config.toggleGuessMove();
+        refreshType = 2;
+        break;
+
       case VK_T:
         if (controlIsPressed(e)) {
           Lizzie.config.toggleShowCommentNodeColor();

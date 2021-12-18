@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
+import javax.swing.JOptionPane;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -342,6 +343,27 @@ public class Config {
 
   public void toggleShowVariationGraph() {
     this.showVariationGraph = !this.showVariationGraph;
+  }
+
+  public void toggleGuessMove() {
+    Lizzie.config.guessMove = !Lizzie.config.guessMove;
+    if (Lizzie.config.guessMove) {
+      int attempts = -1;
+      while (attempts < 0) {
+        String s =
+            (String)
+                JOptionPane.showInputDialog(
+                    Lizzie.frame,
+                    "How many guess attempts",
+                    "Guess mode",
+                    JOptionPane.PLAIN_MESSAGE,
+                    null,
+                    null,
+                    "3");
+        attempts = Integer.parseInt(s);
+      }
+      Lizzie.config.guessMoveAttempts = attempts;
+    }
   }
 
   public void toggleShowComment() {
