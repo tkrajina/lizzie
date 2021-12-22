@@ -13,6 +13,7 @@ import featurecat.lizzie.analysis.YaZenGtp;
 import featurecat.lizzie.rules.Board;
 import featurecat.lizzie.rules.BoardData;
 import featurecat.lizzie.rules.SGFParser;
+import featurecat.lizzie.rules.Stone;
 import featurecat.lizzie.util.Utils;
 import java.awt.*;
 import java.awt.BasicStroke;
@@ -1165,24 +1166,7 @@ public class LizzieFrame extends MainFrame {
     if (boardCoordinates.isPresent()) {
       int[] coords = boardCoordinates.get();
       if (Lizzie.config.guessMove) {
-        Optional<BoardData> next = Lizzie.board.getHistory().getNext();
-        if (next.isPresent()) {
-          if (next.get().lastMove.isPresent()) {
-            int[] nextCoords = next.get().lastMove.get();
-            if (coords[0] == nextCoords[0] && coords[1] == nextCoords[1]) {
-              guessModeFailedCounter = 0;
-              Lizzie.board.nextMove();
-            } else {
-              Toolkit.getDefaultToolkit().beep();
-              guessModeFailedCounter++;
-              System.out.println(guessModeFailedCounter + "<->" + Lizzie.config.guessMoveAttempts);
-              if (guessModeFailedCounter >= Lizzie.config.guessMoveAttempts) {
-                guessModeFailedCounter = 0;
-                Lizzie.board.nextMove();
-              }
-            }
-          }
-        }
+        this.handleGuessMove(coords);
         return;
       }
 
@@ -1198,6 +1182,48 @@ public class LizzieFrame extends MainFrame {
       variationTree.onClicked(x, y);
     }
     repaint();
+  }
+
+  private void handleGuessMove(int[] coords) {
+    Optional<BoardData> next = Lizzie.board.getHistory().getNext();
+    if (next.isPresent()) {
+      if (next.get().lastMove.isPresent()) {
+        int[] nextCoords = next.get().lastMove.get();
+        if (coords[0] == nextCoords[0] && coords[1] == nextCoords[1]) {
+          guessModeFailedCounter = 0;
+          Lizzie.board.nextMove();
+          scheduleAutomaticNextGuessMove();
+        } else {
+          Toolkit.getDefaultToolkit().beep();
+          guessModeFailedCounter++;
+          System.out.println(guessModeFailedCounter + "<->" + Lizzie.config.guessMoveAttempts);
+          if (guessModeFailedCounter >= Lizzie.config.guessMoveAttempts) {
+            guessModeFailedCounter = 0;
+            Lizzie.board.nextMove();
+            scheduleAutomaticNextGuessMove();
+          }
+        }
+      }
+    }
+    repaint();
+  }
+
+  private void scheduleAutomaticNextGuessMove() {
+    Optional<BoardData> next = Lizzie.board.getHistory().getNext();
+    if (!next.isPresent()) {
+      return;
+    }
+    if (next.get().lastMoveColor == Stone.BLACK) {
+      new Thread(new Runnable() {
+        public void run() {
+          try {
+            Thread.sleep(500);
+          } catch (Exception e) {}
+          Lizzie.board.goToMoveNumber(next.get().moveNumber);
+          repaint();
+        }
+      }).start();
+    }
   }
 
   public void onDoubleClicked(int x, int y) {
