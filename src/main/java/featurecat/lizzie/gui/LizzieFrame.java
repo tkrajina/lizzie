@@ -1196,7 +1196,7 @@ public class LizzieFrame extends MainFrame {
         } else {
           Toolkit.getDefaultToolkit().beep();
           guessModeFailedCounter++;
-          System.out.println(guessModeFailedCounter + "<->" + Lizzie.config.guessMoveAttempts);
+          //System.out.println(guessModeFailedCounter + "<->" + Lizzie.config.guessMoveAttempts);
           if (guessModeFailedCounter >= Lizzie.config.guessMoveAttempts) {
             guessModeFailedCounter = 0;
             Lizzie.board.nextMove();
@@ -1209,11 +1209,14 @@ public class LizzieFrame extends MainFrame {
   }
 
   private void scheduleAutomaticNextGuessMove() {
+    if (Lizzie.config.guessMoveStone == null) {
+      return;
+    }
     Optional<BoardData> next = Lizzie.board.getHistory().getNext();
     if (!next.isPresent()) {
       return;
     }
-    if (next.get().lastMoveColor == Stone.BLACK) {
+    if (next.get().lastMoveColor != Lizzie.config.guessMoveStone) {
       new Thread(new Runnable() {
         public void run() {
           try {

@@ -1,5 +1,6 @@
 package featurecat.lizzie;
 
+import featurecat.lizzie.rules.Stone;
 import featurecat.lizzie.theme.Theme;
 import featurecat.lizzie.util.WindowPosition;
 import java.awt.Color;
@@ -75,6 +76,7 @@ public class Config {
   public String toolbarPosition = "South";
   public boolean showNameInBoard = true;
   public boolean guessMove = false;
+  public Stone guessMoveStone = null;
   public int guessMoveAttempts = 0;
 
   public JSONObject config;
@@ -347,6 +349,7 @@ public class Config {
 
   public void toggleGuessMove() {
     Lizzie.config.guessMove = !Lizzie.config.guessMove;
+    Lizzie.config.guessMoveStone = null;
     if (Lizzie.config.guessMove) {
       int attempts = -1;
       while (attempts < 0) {
@@ -354,13 +357,20 @@ public class Config {
             (String)
                 JOptionPane.showInputDialog(
                     Lizzie.frame,
-                    "How many guess attempts",
+                    "How many guess attempts. Use 3w or 5b if you want to guess only specific color.",
                     "Guess mode",
                     JOptionPane.PLAIN_MESSAGE,
                     null,
                     null,
                     "3");
-        attempts = Integer.parseInt(s);
+        s = s.trim().toLowerCase();
+        if (s.endsWith("w")) {
+          Lizzie.config.guessMoveStone = Stone.WHITE;
+        }
+        if (s.endsWith("b")) {
+          Lizzie.config.guessMoveStone = Stone.BLACK;
+        }
+        attempts = Integer.parseInt(s.replace("w", "").replace("b", "").trim());
       }
       Lizzie.config.guessMoveAttempts = attempts;
     }
