@@ -1217,15 +1217,18 @@ public class LizzieFrame extends MainFrame {
       return;
     }
     if (next.get().lastMoveColor != Lizzie.config.guessMoveStone) {
-      new Thread(new Runnable() {
-        public void run() {
-          try {
-            Thread.sleep(500);
-          } catch (Exception e) {}
-          Lizzie.board.goToMoveNumber(next.get().moveNumber);
-          repaint();
-        }
-      }).start();
+      new Thread(
+              new Runnable() {
+                public void run() {
+                  try {
+                    Thread.sleep(1500);
+                  } catch (Exception e) {
+                  }
+                  Lizzie.board.goToMoveNumber(next.get().moveNumber);
+                  repaint();
+                }
+              })
+          .start();
     }
   }
 
