@@ -76,6 +76,7 @@ public class Config {
   public String toolbarPosition = "South";
   public boolean showNameInBoard = true;
   public boolean guessMove = false;
+  public ArrayList<int[]> guessModeFailed = new ArrayList<int[]>();;
   public Stone guessMoveStone = null;
   public int guessMoveAttempts = 0;
 

@@ -1,5 +1,7 @@
 package featurecat.lizzie.gui;
 
+import featurecat.lizzie.Lizzie;
+import featurecat.lizzie.util.DigitOnlyFilter;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Insets;
@@ -11,7 +13,6 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ResourceBundle;
-
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
@@ -20,9 +21,6 @@ import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 import javax.swing.text.DocumentFilter;
 import javax.swing.text.InternationalFormatter;
-
-import featurecat.lizzie.Lizzie;
-import featurecat.lizzie.util.DigitOnlyFilter;
 
 public class ToolBar extends JToolBar {
   public JTextField txtMoveNumber;
@@ -242,16 +240,17 @@ public class ToolBar extends JToolBar {
 
               private DocumentFilter filter = new DigitOnlyFilter();
             });
-    txtMoveNumber.addKeyListener(new java.awt.event.KeyAdapter() {
-        public void keyPressed(KeyEvent e) {
-          if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-            try {
-              Lizzie.board.goToMoveNumberBeyondBranch(Integer.parseInt(txtMoveNumber.getText()));
-            } catch (Exception ex) {
+    txtMoveNumber.addKeyListener(
+        new java.awt.event.KeyAdapter() {
+          public void keyPressed(KeyEvent e) {
+            if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+              try {
+                Lizzie.board.goToMoveNumberBeyondBranch(Integer.parseInt(txtMoveNumber.getText()));
+              } catch (Exception ex) {
+              }
             }
           }
-        }
-    });
+        });
     JPanel panel = new JPanel(null);
     panel.setPreferredSize(new Dimension(100, 20));
     txtMoveNumber.setBounds(2, 1, 30, 18);

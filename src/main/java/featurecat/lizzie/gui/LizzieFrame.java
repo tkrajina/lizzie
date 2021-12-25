@@ -13,7 +13,6 @@ import featurecat.lizzie.analysis.YaZenGtp;
 import featurecat.lizzie.rules.Board;
 import featurecat.lizzie.rules.BoardData;
 import featurecat.lizzie.rules.SGFParser;
-import featurecat.lizzie.rules.Stone;
 import featurecat.lizzie.util.Utils;
 import java.awt.*;
 import java.awt.BasicStroke;
@@ -120,8 +119,6 @@ public class LizzieFrame extends MainFrame {
   private long lastPlayouts = 0;
   public boolean isDrawVisitsInTitle = true;
   RightClickMenu rightClickMenu;
-
-  private int guessModeFailedCounter = 0;
 
   /** Creates a window */
   public LizzieFrame() {
@@ -1167,6 +1164,7 @@ public class LizzieFrame extends MainFrame {
       int[] coords = boardCoordinates.get();
       if (Lizzie.config.guessMove) {
         this.handleGuessMove(coords);
+        repaint();
         return;
       }
 
@@ -1190,15 +1188,15 @@ public class LizzieFrame extends MainFrame {
       if (next.get().lastMove.isPresent()) {
         int[] nextCoords = next.get().lastMove.get();
         if (coords[0] == nextCoords[0] && coords[1] == nextCoords[1]) {
-          guessModeFailedCounter = 0;
+          Lizzie.config.guessModeFailed.clear();
           Lizzie.board.nextMove();
           scheduleAutomaticNextGuessMove();
         } else {
           Toolkit.getDefaultToolkit().beep();
-          guessModeFailedCounter++;
-          //System.out.println(guessModeFailedCounter + "<->" + Lizzie.config.guessMoveAttempts);
-          if (guessModeFailedCounter >= Lizzie.config.guessMoveAttempts) {
-            guessModeFailedCounter = 0;
+          Lizzie.config.guessModeFailed.add(coords);
+          // System.out.println(guessModeFailedCounter + "<->" + Lizzie.config.guessMoveAttempts);
+          if (Lizzie.config.guessModeFailed.size() >= Lizzie.config.guessMoveAttempts) {
+            Lizzie.config.guessModeFailed.clear();
             Lizzie.board.nextMove();
             scheduleAutomaticNextGuessMove();
           }

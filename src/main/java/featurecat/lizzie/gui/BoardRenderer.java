@@ -179,6 +179,12 @@ public class BoardRenderer {
       drawStoneMarkup(g);
     }
 
+    Lizzie.config.guessModeFailed.forEach(
+        coord -> {
+          int moveX = x + scaledMarginWidth + squareWidth * coord[0];
+          int moveY = y + scaledMarginHeight + squareHeight * coord[1];
+          drawMarkX(g, moveX, moveY, stoneRadius / 2);
+        });
     //        timer.lap("leelaz");
 
     //        timer.print();
