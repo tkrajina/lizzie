@@ -365,7 +365,7 @@ public class Config {
                     JOptionPane.PLAIN_MESSAGE,
                     null,
                     null,
-                    "3");
+                    "4");
         s = s.trim().toLowerCase();
         if (s.endsWith("w")) {
           Lizzie.config.guessMoveStone = Stone.WHITE;
