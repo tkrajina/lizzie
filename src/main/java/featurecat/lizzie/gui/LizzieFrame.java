@@ -1185,6 +1185,7 @@ public class LizzieFrame extends MainFrame {
   private void handleGuessMove(int[] coords) {
     Optional<BoardData> next = Lizzie.board.getHistory().getNext();
     if (next.isPresent()) {
+      Lizzie.config.guessingMove = next;
       if (next.get().lastMove.isPresent()) {
         int[] nextCoords = next.get().lastMove.get();
         if (coords[0] == nextCoords[0] && coords[1] == nextCoords[1]) {

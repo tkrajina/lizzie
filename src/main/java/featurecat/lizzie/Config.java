@@ -1,5 +1,6 @@
 package featurecat.lizzie;
 
+import featurecat.lizzie.rules.BoardData;
 import featurecat.lizzie.rules.Stone;
 import featurecat.lizzie.theme.Theme;
 import featurecat.lizzie.util.WindowPosition;
@@ -77,6 +78,7 @@ public class Config {
   public boolean showNameInBoard = true;
   public boolean guessMove = false;
   public ArrayList<int[]> guessModeFailed = new ArrayList<int[]>();;
+  public Optional<BoardData> guessingMove = Optional.ofNullable(null);
   public Stone guessMoveStone = null;
   public int guessMoveAttempts = 0;
 
