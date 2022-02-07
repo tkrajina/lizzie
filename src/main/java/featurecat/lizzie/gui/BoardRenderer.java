@@ -179,7 +179,9 @@ public class BoardRenderer {
       drawStoneMarkup(g);
     }
 
-    if (Lizzie.board.getHistory().getNext().isPresent() && Lizzie.config.guessingMove.isPresent() && Lizzie.board.getHistory().getNext().get() == Lizzie.config.guessingMove.get()) {
+    if (Lizzie.board.getHistory().getNext().isPresent()
+        && Lizzie.config.guessingMove.isPresent()
+        && Lizzie.board.getHistory().getNext().get() == Lizzie.config.guessingMove.get()) {
       Lizzie.config.guessModeFailed.forEach(
           coord -> {
             int moveX = x + scaledMarginWidth + squareWidth * coord[0];
