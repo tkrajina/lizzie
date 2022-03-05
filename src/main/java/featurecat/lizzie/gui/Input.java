@@ -10,6 +10,9 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 public class Input implements MouseListener, KeyListener, MouseWheelListener, MouseMotionListener {
   @Override
@@ -383,7 +386,15 @@ public class Input implements MouseListener, KeyListener, MouseWheelListener, Mo
         break;
 
       case VK_T:
-        if (controlIsPressed(e)) {
+        if (e.isShiftDown()) {
+          JTextArea ta = new JTextArea(10, 50);
+          ta.setText(Lizzie.board.getHistory().getData().comment);
+          switch (JOptionPane.showConfirmDialog(null, new JScrollPane(ta))) {
+            case JOptionPane.OK_OPTION:
+              Lizzie.board.getHistory().getData().comment = ta.getText();
+              break;
+          }
+        } else if (controlIsPressed(e)) {
           Lizzie.config.toggleShowCommentNodeColor();
         } else {
           Lizzie.config.toggleShowComment();
